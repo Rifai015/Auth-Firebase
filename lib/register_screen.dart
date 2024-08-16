@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'button-navigation/halaman_bottom.dart';
 import 'login_screen.dart';
 
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -13,6 +12,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController txtNama = TextEditingController(
+    text: "",
+  );
+  final TextEditingController txtJurusan = TextEditingController(
     text: "",
   );
   final TextEditingController txtEmail = TextEditingController(
@@ -107,6 +109,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         controller: txtNama,
                         keyboardType: TextInputType.name,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              15,
+                            ),
+                            borderSide: const BorderSide(
+                              color: Colors.yellow,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              15,
+                            ),
+                            borderSide: const BorderSide(
+                              color: Colors.black,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(
+                              15,
+                            ),
+                          ),
+                          labelText: "Jurusan",
+                          hintText: "Tuliskan Jurusan Kamu",
+                          hintStyle: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey,
+                          ),
+                          contentPadding: const EdgeInsets.all(
+                            15,
+                          ),
+                        ),
+                        controller: txtJurusan,
+                        keyboardType: TextInputType.text,
                       ),
                       const SizedBox(
                         height: 20,
@@ -230,9 +271,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HalamanBottom(
-                                    
-                                  ),
+                                  builder: (context) => const HalamanBottom(),
                                 ),
                               );
                             }

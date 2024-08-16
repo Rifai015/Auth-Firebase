@@ -7,15 +7,9 @@ class UserService {
     "user",
   );
 
-  Future<void> dataUser(
-    UserModels user,
-  ) async {
+  Future<void> dataUser(UserModels user) async {
     try {
-      collectionReference
-          .doc(
-        user.id,
-      )
-          .set({
+      collectionReference.doc(user.id).set({
         "name": user.name,
         "email": user.email,
         "jurusan": user.jurusan,
@@ -32,8 +26,8 @@ class UserService {
       DocumentSnapshot documentSnapshot =
           await collectionReference.doc(id).get();
       return UserModels(
-        id: id,
         name: documentSnapshot["name"],
+        id: id,
         email: documentSnapshot["email"],
         jurusan: documentSnapshot["jurusan"],
       );
