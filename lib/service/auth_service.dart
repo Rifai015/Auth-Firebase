@@ -10,8 +10,10 @@ class AuthService {
     required String email,
     required String password,
     required String jurusan,
-   }) async {
+  }) async {
     try {
+      // user credential adalah sebuah objek yang digunakan dalam firebase auth untuk mewakili hasil dari operasi auntentikasi 
+      // cth dalam kehidupan sehari-hari ketika kita ingin mendafatar disebuah organisasi, maka pihak organisasi tersebut akan mengasih berkas kepada kita, pastinya berkas tersebut akan dibuat untuk pendaftaran. Maka dari itu usercredential bisa dibilang sebgai berkas laporannnya. 
       UserCredential userCredential =
           await firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -44,6 +46,7 @@ class AuthService {
         password: password,
       );
       UserModels user = await UserService().dataId(
+        // tanda ! seru adalah tanda dalam objekdart yg digunakan untuk memaksa sifat null (?) menjadi tidak null
         userCredential.user!.uid,
       );
       await UserService().dataUser(

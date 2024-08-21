@@ -11,7 +11,7 @@ class HalamanBottom extends StatefulWidget {
 }
 
 class _HalamanBottomState extends State<HalamanBottom> {
-  late final listBottom = [
+  final listBottom = [
     const HomeScreen(),
     const SearchScreen(),
     const AccountScreen(),
@@ -21,44 +21,46 @@ class _HalamanBottomState extends State<HalamanBottom> {
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
-    return Scaffold(
-      body: listBottom[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        elevation: 8,
-        currentIndex: currentIndex,
-        onTap: (value) {
-          setState(
-            () {
-              currentIndex = value;
-            },
-          );
-        },
-        type: BottomNavigationBarType.shifting,
-        selectedItemColor: Colors.cyan,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
+    return SafeArea(
+      child: Scaffold(
+        body: listBottom[currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 8,
+          currentIndex: currentIndex,
+          onTap: (value) {
+            setState(
+              () {
+                currentIndex = value;
+              },
+            );
+          },
+          type: BottomNavigationBarType.shifting,
+          selectedItemColor: Colors.cyan,
+          unselectedItemColor: Colors.grey,
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+              ),
+              label: "Home",
             ),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.search,
+              ),
+              label: "Search",
             ),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.account_circle,
+              ),
+              label: "Account",
             ),
-            label: "Account",
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

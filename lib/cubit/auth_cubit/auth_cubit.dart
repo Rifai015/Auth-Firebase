@@ -1,5 +1,6 @@
 import 'package:auth_firebase/models/user_models.dart';
 import 'package:auth_firebase/service/auth_service.dart';
+import 'package:auth_firebase/service/user_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -68,6 +69,30 @@ class AuthCubit extends Cubit<AuthState> {
       await AuthService().signOut();
       emit(
         AuthInitial(),
+      );
+    } catch (e) {
+      emit(
+        AuthFailed(
+          e.toString(),
+        ),
+      );
+    }
+  }
+
+  void dataId(
+    String id,
+  ) async {
+    try {
+      emit(
+        AuthLoading(),
+      );
+      UserModels user = await UserService().dataId(
+        id,
+      );
+      emit(
+        AuthSucces(
+          user,
+        ),
       );
     } catch (e) {
       emit(

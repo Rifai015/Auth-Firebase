@@ -1,4 +1,6 @@
+import 'package:auth_firebase/cubit/auth_cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'button-navigation/halaman_bottom.dart';
 import 'register_screen.dart';
@@ -164,44 +166,71 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 20,
                       ),
                       Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(
-                              double.maxFinite,
-                              45,
-                            ),
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.green,
-                            animationDuration: const Duration(
-                              seconds: 3,
-                            ),
-                          ),
-                          onPressed: () {
-                            if (validate()) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Tolong Isi Semua Field",
-                                  ),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            } else {
-                              Navigator.push(
+                        child: BlocConsumer<AuthCubit, AuthState>(
+                          listener: (context, state) {
+                            if (state is AuthSucces) {
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const HalamanBottom(),
                                 ),
+                                (route) => false,
+                              );
+                            } else if (state is AuthFailed) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    state.error,
+                                  ),
+                                  backgroundColor: Colors.red,
+                                ),
                               );
                             }
                           },
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                            ),
-                          ),
+                          builder: (context, state) {
+                            if (state is AuthLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(
+                                  double.maxFinite,
+                                  45,
+                                ),
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.green,
+                                animationDuration: const Duration(
+                                  seconds: 3,
+                                ),
+                              ),
+                              onPressed: () {
+                                if (validate()) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Tolong Isi Semua Field",
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                } else {
+                                  context.read<AuthCubit>().signIn(
+                                        email: txtEmail.text,
+                                        password: txtPassword.text,
+                                      );
+                                }
+                              },
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
